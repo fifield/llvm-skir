@@ -68,6 +68,10 @@ public:
   /// NotifyFunctionEmitted may have been destroyed by the time of the matching
   /// NotifyFreeingMachineCode call.
   virtual void NotifyFreeingMachineCode(void *OldPtr) {}
+
+  // SKIR
+  virtual void NotifyFunctionStubEmitted(const Function &F, 
+                                         void *Addr, void *Stub) {};
 };
 
 // This returns NULL if support isn't available.

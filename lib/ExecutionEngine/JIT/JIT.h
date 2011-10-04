@@ -196,6 +196,7 @@ public:
       const Function &F, void *Code, size_t Size,
       const JITEvent_EmittedFunctionDetails &Details);
   void NotifyFreeingMachineCode(void *OldPtr);
+  void NotifyFunctionStubEmitted(const Function &F, void *Addr, void *Stub);
 
 private:
   static JITCodeEmitter *createEmitter(JIT &J, JITMemoryManager *JMM,

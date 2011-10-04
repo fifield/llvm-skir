@@ -296,6 +296,176 @@ namespace llvm {
     }
   };
 
+  // SKIR
+  struct SKIRIntrinsic : public IntrinsicInst {
+
+    // Methods for support type inquiry through isa, cast, and dyn_cast:
+    static inline bool classof(const SKIRIntrinsic *) { return true; }
+    static inline bool classof(const IntrinsicInst *I) {
+      switch (I->getIntrinsicID()) {
+      case Intrinsic::skir_kernel:
+      case Intrinsic::skir_call:
+      case Intrinsic::skir_wait:
+      case Intrinsic::skir_become:
+      case Intrinsic::skir_stream:
+      case Intrinsic::skir_array:
+      case Intrinsic::skir_push:
+      case Intrinsic::skir_pop:
+      case Intrinsic::skir_peek:
+      case Intrinsic::skir_yield:
+      case Intrinsic::skir_return:
+        return true;
+      default: return false;
+      }
+    }
+    static inline bool classof(const Value *V) {
+      return isa<IntrinsicInst>(V) && classof(cast<IntrinsicInst>(V));
+    }
+  };
+
+  struct SKIRKernelInst : public SKIRIntrinsic {
+
+    // Methods for support type inquiry through isa, cast, and dyn_cast:
+    static inline bool classof(const SKIRKernelInst *) { return true; }
+    static inline bool classof(const IntrinsicInst *I) {
+      return I->getIntrinsicID() == Intrinsic::skir_kernel;
+    }
+    static inline bool classof(const Value *V) {
+      return isa<IntrinsicInst>(V) && classof(cast<IntrinsicInst>(V));
+    }
+    Function *getInitFunction() {
+	ConstantExpr *CE = dyn_cast<ConstantExpr>(Op<1>());
+	return dyn_cast<Function>(CE->getOperand(0));
+    }
+    Function *getWorkFunction() {
+	ConstantExpr *CE = dyn_cast<ConstantExpr>(Op<2>());
+	return dyn_cast<Function>(CE->getOperand(0));
+    }
+    Value *getArgument() {
+	Value *V = dyn_cast<Value>(Op<3>());
+	return V;
+    }
+  };
+  struct SKIRCallInst : public SKIRIntrinsic {
+
+    // Methods for support type inquiry through isa, cast, and dyn_cast:
+    static inline bool classof(const SKIRCallInst *) { return true; }
+    static inline bool classof(const IntrinsicInst *I) {
+      return I->getIntrinsicID() == Intrinsic::skir_call;
+    }
+    static inline bool classof(const Value *V) {
+      return isa<IntrinsicInst>(V) && classof(cast<IntrinsicInst>(V));
+    }
+  };
+
+  struct SKIRWaitInst : public SKIRIntrinsic {
+
+    // Methods for support type inquiry through isa, cast, and dyn_cast:
+    static inline bool classof(const SKIRWaitInst *) { return true; }
+    static inline bool classof(const IntrinsicInst *I) {
+      return I->getIntrinsicID() == Intrinsic::skir_wait;
+    }
+    static inline bool classof(const Value *V) {
+      return isa<IntrinsicInst>(V) && classof(cast<IntrinsicInst>(V));
+    }
+  };
+
+  struct SKIRStreamInst : public SKIRIntrinsic {
+
+    // Methods for support type inquiry through isa, cast, and dyn_cast:
+    static inline bool classof(const SKIRStreamInst *) { return true; }
+    static inline bool classof(const IntrinsicInst *I) {
+      return I->getIntrinsicID() == Intrinsic::skir_stream;
+    }
+    static inline bool classof(const Value *V) {
+      return isa<IntrinsicInst>(V) && classof(cast<IntrinsicInst>(V));
+    }
+  };
+
+  struct SKIRArrayInst : public SKIRIntrinsic {
+
+    // Methods for support type inquiry through isa, cast, and dyn_cast:
+    static inline bool classof(const SKIRArrayInst *) { return true; }
+    static inline bool classof(const IntrinsicInst *I) {
+      return I->getIntrinsicID() == Intrinsic::skir_array;
+    }
+    static inline bool classof(const Value *V) {
+      return isa<IntrinsicInst>(V) && classof(cast<IntrinsicInst>(V));
+    }
+  };
+
+  struct SKIRPushInst : public SKIRIntrinsic {
+
+    // Methods for support type inquiry through isa, cast, and dyn_cast:
+    static inline bool classof(const SKIRPushInst *) { return true; }
+    static inline bool classof(const IntrinsicInst *I) {
+      return I->getIntrinsicID() == Intrinsic::skir_push;
+    }
+    static inline bool classof(const Value *V) {
+      return isa<IntrinsicInst>(V) && classof(cast<IntrinsicInst>(V));
+    }
+  };
+
+  struct SKIRPopInst : public SKIRIntrinsic {
+
+    // Methods for support type inquiry through isa, cast, and dyn_cast:
+    static inline bool classof(const SKIRPopInst *) { return true; }
+    static inline bool classof(const IntrinsicInst *I) {
+      return I->getIntrinsicID() == Intrinsic::skir_pop;
+    }
+    static inline bool classof(const Value *V) {
+      return isa<IntrinsicInst>(V) && classof(cast<IntrinsicInst>(V));
+    }
+  };
+
+  struct SKIRPeekInst : public SKIRIntrinsic {
+
+    // Methods for support type inquiry through isa, cast, and dyn_cast:
+    static inline bool classof(const SKIRPeekInst *) { return true; }
+    static inline bool classof(const IntrinsicInst *I) {
+      return I->getIntrinsicID() == Intrinsic::skir_peek;
+    }
+    static inline bool classof(const Value *V) {
+      return isa<IntrinsicInst>(V) && classof(cast<IntrinsicInst>(V));
+    }
+  };
+    
+  struct SKIRYieldInst : public SKIRIntrinsic {
+
+    // Methods for support type inquiry through isa, cast, and dyn_cast:
+    static inline bool classof(const SKIRYieldInst *) { return true; }
+    static inline bool classof(const IntrinsicInst *I) {
+      return I->getIntrinsicID() == Intrinsic::skir_yield;
+    }
+    static inline bool classof(const Value *V) {
+      return isa<IntrinsicInst>(V) && classof(cast<IntrinsicInst>(V));
+    }
+  };
+
+  struct SKIRReturnInst : public SKIRIntrinsic {
+
+    // Methods for support type inquiry through isa, cast, and dyn_cast:
+    static inline bool classof(const SKIRReturnInst *) { return true; }
+    static inline bool classof(const IntrinsicInst *I) {
+      return I->getIntrinsicID() == Intrinsic::skir_return;
+    }
+    static inline bool classof(const Value *V) {
+      return isa<IntrinsicInst>(V) && classof(cast<IntrinsicInst>(V));
+    }
+  };
+
+  struct SKIRBecomeInst : public SKIRIntrinsic {
+
+    // Methods for support type inquiry through isa, cast, and dyn_cast:
+    static inline bool classof(const SKIRBecomeInst *) { return true; }
+    static inline bool classof(const IntrinsicInst *I) {
+      return I->getIntrinsicID() == Intrinsic::skir_become;
+    }
+    static inline bool classof(const Value *V) {
+      return isa<IntrinsicInst>(V) && classof(cast<IntrinsicInst>(V));
+    }
+  };
+
 }
 
 #endif

@@ -520,6 +520,20 @@ void IntrinsicLowering::LowerIntrinsicCall(CallInst *CI) {
   case Intrinsic::lifetime_end:
     // Discard region information.
     break;
+  
+  case Intrinsic::skir_kernel:
+  case Intrinsic::skir_array:
+  case Intrinsic::skir_stream:
+  case Intrinsic::skir_call:
+  case Intrinsic::skir_push:
+  case Intrinsic::skir_pop:
+  case Intrinsic::skir_peek:
+  case Intrinsic::skir_yield:
+  case Intrinsic::skir_return:
+  case Intrinsic::skir_become:
+    llvm_report_error("Error: Code generator does not support SKIR intrinsic function '"
+                      + Callee->getName() +"' lowering!");
+    break;
   }
 
   assert(CI->use_empty() &&

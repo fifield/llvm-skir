@@ -595,6 +595,15 @@ void JIT::NotifyFreeingMachineCode(void *OldPtr) {
   }
 }
 
+void JIT::NotifyFunctionStubEmitted(
+    const Function &F,
+    void *Addr, void *Stub) {
+  MutexGuard locked(lock);
+  for (unsigned I = 0, S = EventListeners.size(); I < S; ++I) {
+    EventListeners[I]->NotifyFunctionStubEmitted(F, Addr, Stub);
+  }
+}
+
 /// runJITOnFunction - Run the FunctionPassManager full of
 /// just-in-time compilation passes on F, hopefully filling in
 /// GlobalAddress[F] with the address of F's machine code.

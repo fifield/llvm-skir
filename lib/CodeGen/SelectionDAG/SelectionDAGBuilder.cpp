@@ -4207,6 +4207,36 @@ SelectionDAGBuilder::visitIntrinsicCall(CallInst &I, unsigned Intrinsic) {
   case Intrinsic::lifetime_end:
     // Discard region information.
     return 0;
+
+  // SKIR
+  case Intrinsic::skir_stream:
+    return "__SKIR_stream";
+  case Intrinsic::skir_array:
+    return "__SKIR_array";
+  case Intrinsic::skir_kernel:
+    return "__SKIR_kernel";
+  case Intrinsic::skir_call:
+    return "__SKIR_call";
+  case Intrinsic::skir_push:
+    return "__SKIR_push";
+  case Intrinsic::skir_pop:
+    return "__SKIR_pop";
+  case Intrinsic::skir_peek:
+    return "__SKIR_peek";
+  case Intrinsic::skir_become:
+    return "__SKIR_become";
+#if 0
+  case Intrinsic::skir_yield:
+    return "__SKIRRT_yield32";
+  case Intrinsic::skir_return:
+    return "__SKIRRT_return32";  
+#else
+  case Intrinsic::skir_yield:
+    return "__SKIRRT_yield64";
+  case Intrinsic::skir_return:
+    return "__SKIRRT_return64";  
+#endif
+
   }
 }
 

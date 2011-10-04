@@ -608,6 +608,7 @@ void *JITResolver::getLazyFunctionStub(Function *F) {
   // external function, if it was resolved.
   Stub = TheJIT->getJITInfo().emitFunctionStub(F, Actual, JE);
   JE.finishGVStub();
+  TheJIT->NotifyFunctionStubEmitted(*F, Actual, Stub);
 
   if (Actual != (void*)(intptr_t)LazyResolverFn) {
     // If we are getting the stub for an external function, we really want the
@@ -1576,6 +1577,7 @@ void JIT::updateFunctionStub(Function *F) {
   JE->startGVStub(Stub, layout.Size);
   getJITInfo().emitFunctionStub(F, Addr, *getCodeEmitter());
   JE->finishGVStub();
+  NotifyFunctionStubEmitted(*F, Addr, Stub);
 }
 
 /// freeMachineCodeForFunction - release machine code memory for given Function.
