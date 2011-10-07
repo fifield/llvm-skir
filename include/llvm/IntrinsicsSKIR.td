@@ -24,8 +24,8 @@ def skir_int64_ty      : LLVMType<i64>;
 def skir_elmptr_ty        : LLVMPointerType<llvm_i8_ty>;
 
 // create a kernel
-//  kernel = skir.kernel(char *initfn, char *workfn, void *args)
-def int_skir_kernel : Intrinsic<[skir_kernel_ty], [llvm_ptr_ty, llvm_ptr_ty, llvm_ptr_ty]>;
+//  kernel = skir.kernel(char *workfn, void *args)
+def int_skir_kernel : Intrinsic<[skir_kernel_ty], [llvm_ptr_ty, llvm_ptr_ty]>;
 
 // call a kernel
 //  skir.call(void *kernel, void *inputs, void *outputs)
@@ -37,10 +37,6 @@ def int_skir_wait   : Intrinsic<[llvm_void_ty], [skir_kernel_ty]>;
 // create a stream
 //  stream = skir.stream(void)
 def int_skir_stream : Intrinsic<[skir_stream_ty], [skir_int_ty]>;
-
-// create a stream from array
-//  stream = skir.array()
-def int_skir_array : Intrinsic<[skir_stream_ty], [skir_void_ptr, skir_void_ptr, skir_int_ty, skir_int_ty]>;
 
 // push
 //  skir.push(stream, element)

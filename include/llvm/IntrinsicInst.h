@@ -308,7 +308,6 @@ namespace llvm {
       case Intrinsic::skir_wait:
       case Intrinsic::skir_become:
       case Intrinsic::skir_stream:
-      case Intrinsic::skir_array:
       case Intrinsic::skir_push:
       case Intrinsic::skir_pop:
       case Intrinsic::skir_peek:
@@ -333,16 +332,12 @@ namespace llvm {
     static inline bool classof(const Value *V) {
       return isa<IntrinsicInst>(V) && classof(cast<IntrinsicInst>(V));
     }
-    Function *getInitFunction() {
+    Function *getWorkFunction() {
 	ConstantExpr *CE = dyn_cast<ConstantExpr>(Op<1>());
 	return dyn_cast<Function>(CE->getOperand(0));
     }
-    Function *getWorkFunction() {
-	ConstantExpr *CE = dyn_cast<ConstantExpr>(Op<2>());
-	return dyn_cast<Function>(CE->getOperand(0));
-    }
     Value *getArgument() {
-	Value *V = dyn_cast<Value>(Op<3>());
+	Value *V = dyn_cast<Value>(Op<2>());
 	return V;
     }
   };
@@ -376,18 +371,6 @@ namespace llvm {
     static inline bool classof(const SKIRStreamInst *) { return true; }
     static inline bool classof(const IntrinsicInst *I) {
       return I->getIntrinsicID() == Intrinsic::skir_stream;
-    }
-    static inline bool classof(const Value *V) {
-      return isa<IntrinsicInst>(V) && classof(cast<IntrinsicInst>(V));
-    }
-  };
-
-  struct SKIRArrayInst : public SKIRIntrinsic {
-
-    // Methods for support type inquiry through isa, cast, and dyn_cast:
-    static inline bool classof(const SKIRArrayInst *) { return true; }
-    static inline bool classof(const IntrinsicInst *I) {
-      return I->getIntrinsicID() == Intrinsic::skir_array;
     }
     static inline bool classof(const Value *V) {
       return isa<IntrinsicInst>(V) && classof(cast<IntrinsicInst>(V));

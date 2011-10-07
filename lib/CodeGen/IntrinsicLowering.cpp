@@ -522,7 +522,6 @@ void IntrinsicLowering::LowerIntrinsicCall(CallInst *CI) {
     break;
   
   case Intrinsic::skir_kernel:
-  case Intrinsic::skir_array:
   case Intrinsic::skir_stream:
   case Intrinsic::skir_call:
   case Intrinsic::skir_push:

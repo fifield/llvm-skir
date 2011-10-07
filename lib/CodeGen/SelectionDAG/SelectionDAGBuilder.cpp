@@ -4211,8 +4211,6 @@ SelectionDAGBuilder::visitIntrinsicCall(CallInst &I, unsigned Intrinsic) {
   // SKIR
   case Intrinsic::skir_stream:
     return "__SKIR_stream";
-  case Intrinsic::skir_array:
-    return "__SKIR_array";
   case Intrinsic::skir_kernel:
     return "__SKIR_kernel";
   case Intrinsic::skir_call:
