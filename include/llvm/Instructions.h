@@ -1855,6 +1855,22 @@ public:
     OperandList[OpNo+1] = (Value*)BB;
   }
 
+  /// addIncomingUnchecked - Add an incoming value to the end of the PHI list
+  ///                        (without typecheck)
+  void addIncomingUnchecked(Value *V, BasicBlock *BB) {
+    assert(V && "PHI node got a null value!");
+    assert(BB && "PHI node got a null basic block!");
+    //    assert(getType() == V->getType() &&
+    //           "All operands to PHI node must be the same type as the PHI node!");
+    unsigned OpNo = NumOperands;
+    if (OpNo+2 > ReservedSpace)
+      resizeOperands(0);  // Get more space!
+    // Initialize some new operands.
+    NumOperands = OpNo+2;
+    OperandList[OpNo] = V;
+    OperandList[OpNo+1] = (Value*)BB;
+  }
+
   /// removeIncomingValue - Remove an incoming value.  This is useful if a
   /// predecessor basic block is deleted.  The value removed is returned.
   ///

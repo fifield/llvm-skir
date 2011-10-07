@@ -386,9 +386,9 @@ ifdef REQUIRES_FRAME_POINTER
 endif
 
 # If REQUIRES_RTTI=1 is specified then don't disable run-time type id.
-ifneq ($(REQUIRES_RTTI), 1)
-  CXX.Flags += -fno-rtti
-endif
+#ifneq ($(REQUIRES_RTTI), 1)
+#  CXX.Flags += -fno-rtti
+#endif
 
 ifdef ENABLE_COVERAGE
   BuildMode := $(BuildMode)+Coverage
